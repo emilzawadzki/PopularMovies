@@ -39,8 +39,31 @@ struct ContentView: View {
                 }
             }
             Text("Select an item")
-        }
+		}.onAppear {
+			Task {
+				await getData()
+			}
+		}
     }
+	
+	func getData() async {
+		let dataFetcher = DataFetcher()
+		let moviesData = try? await dataFetcher.getPopularMoviesData()
+		let moviesModel = dataFetcher.moviesListModel(from: moviesData)
+		let mov1 = moviesModel?.first
+		
+		let searchMoviesData = try? await dataFetcher.serachMovies(query: "Matrix")
+		let searchMoviesModel = dataFetcher.moviesListModel(from: searchMoviesData)
+		if let searchMov1 = searchMoviesModel?.first {
+			let searchImgData = try? await dataFetcher.downloadImage(posterPath: searchMov1.poster_path)
+			let img = UIImage(data: searchImgData!)
+			
+			let movieDetailsData = try? await dataFetcher.getMovieDetails(movieID: searchMov1.id)
+			let movieDetailsModel = dataFetcher.movieDetailsModel(from: movieDetailsData)
+			
+			var t = 0
+		}
+	}
 
     private func addItem() {
         withAnimation {
