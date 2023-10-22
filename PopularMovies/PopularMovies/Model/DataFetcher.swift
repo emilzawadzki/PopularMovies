@@ -14,8 +14,8 @@ class DataFetcher {
 	private let apiPath = "https://api.themoviedb.org/3/"
 	private let imageApiPath = "https://image.tmdb.org/t/p/original/"
 	
-	func getPopularMoviesData() async throws -> Data? {
-		guard let url = URL(string: "\(apiPath)discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc") else {
+	func getPopularMoviesData(page: Int = 1) async throws -> Data? {
+		guard let url = URL(string: "\(apiPath)discover/movie?include_adult=false&include_video=false&language=en-US&page=\(page)&sort_by=popularity.desc") else {
 			//TODO: handle error
 			return nil
 		}

@@ -17,9 +17,9 @@ struct PopularMoviesView: View {
 		VStack {
 			List (moviesViewModel.onlyFavourites ? moviesViewModel.favouriteMovies : moviesViewModel.movies) { movie in
 				MovieListItemView(movie: movie)
-			}
-			.refreshable {
-				await moviesViewModel.getPopularMovies()
+					.onAppear() {
+						moviesViewModel.loadMoreContentIfNeeded(currentItem: movie)
+					}
 			}
 			
 			HStack(alignment: .top, spacing: 20) {
@@ -36,6 +36,11 @@ struct PopularMoviesView: View {
 				.clipShape(RoundedRectangle(cornerRadius: 10))
 			}
 			.padding()
+		}
+		.onAppear {
+			Task {
+				await moviesViewModel.getPopularMovies()
+			}
 		}
     }
 

@@ -16,17 +16,29 @@ class PopularMoviesViewModel: ObservableObject {
 	}
 	@Published var onlyFavourites = false
 	
+	private var downloadedPageIndex = 1
+	
 	@MainActor
 	func getPopularMovies() async {
 		let dataFetcher = DataFetcher()
-		let moviesData = try? await dataFetcher.getPopularMoviesData()
+		let moviesData = try? await dataFetcher.getPopularMoviesData(page: downloadedPageIndex)
 		let moviesModel = dataFetcher.moviesListModel(from: moviesData)
 		guard let movies = moviesModel else { return }
-		self.movies = movies
+		self.movies.append(contentsOf: movies)
 	}
 	
 	func filterFavourites(movies: [MovieModel]) -> [MovieModel] {
 		//TODO: change
 		return movies.filter{ $0.adult }
+	}
+	
+	func loadMoreContentIfNeeded(currentItem: MovieModel) {
+		if movies.last?.id == currentItem.id {
+			downloadedPageIndex += 1
+			Task {
+				await getPopularMovies()
+			}
+		}
+		
 	}
 }
