@@ -13,7 +13,7 @@ struct PopularMoviesApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+			PopularMoviesView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

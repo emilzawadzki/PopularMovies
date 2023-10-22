@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		20C1614C2AE5A3FA000733E4 /* PopularMoviesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1614B2AE5A3FA000733E4 /* PopularMoviesApp.swift */; };
-		20C1614E2AE5A3FA000733E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1614D2AE5A3FA000733E4 /* ContentView.swift */; };
+		20C1614E2AE5A3FA000733E4 /* PopularMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1614D2AE5A3FA000733E4 /* PopularMoviesView.swift */; };
 		20C161502AE5A3FB000733E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20C1614F2AE5A3FB000733E4 /* Assets.xcassets */; };
 		20C161532AE5A3FB000733E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20C161522AE5A3FB000733E4 /* Preview Assets.xcassets */; };
 		20C161552AE5A3FB000733E4 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C161542AE5A3FB000733E4 /* Persistence.swift */; };
@@ -20,6 +20,8 @@
 		20C1617E2AE5A8FE000733E4 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1617D2AE5A8FE000733E4 /* MovieModel.swift */; };
 		20C161802AE5ABDC000733E4 /* PopularMoviesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1617F2AE5ABDC000733E4 /* PopularMoviesResponseModel.swift */; };
 		20C161822AE5B22B000733E4 /* MovieDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C161812AE5B22B000733E4 /* MovieDetailsModel.swift */; };
+		20C161862AE5B4DF000733E4 /* PopularMoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C161852AE5B4DF000733E4 /* PopularMoviesViewModel.swift */; };
+		20C161892AE5B72C000733E4 /* MovieListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C161882AE5B72C000733E4 /* MovieListItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +44,7 @@
 /* Begin PBXFileReference section */
 		20C161482AE5A3FA000733E4 /* PopularMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopularMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20C1614B2AE5A3FA000733E4 /* PopularMoviesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesApp.swift; sourceTree = "<group>"; };
-		20C1614D2AE5A3FA000733E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		20C1614D2AE5A3FA000733E4 /* PopularMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesView.swift; sourceTree = "<group>"; };
 		20C1614F2AE5A3FB000733E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20C161522AE5A3FB000733E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		20C161542AE5A3FB000733E4 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -56,6 +58,8 @@
 		20C1617D2AE5A8FE000733E4 /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
 		20C1617F2AE5ABDC000733E4 /* PopularMoviesResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesResponseModel.swift; sourceTree = "<group>"; };
 		20C161812AE5B22B000733E4 /* MovieDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsModel.swift; sourceTree = "<group>"; };
+		20C161852AE5B4DF000733E4 /* PopularMoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesViewModel.swift; sourceTree = "<group>"; };
+		20C161882AE5B72C000733E4 /* MovieListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,9 +110,9 @@
 		20C1614A2AE5A3FA000733E4 /* PopularMovies */ = {
 			isa = PBXGroup;
 			children = (
+				20C161832AE5B421000733E4 /* UI */,
 				20C1617A2AE5A4BB000733E4 /* Model */,
 				20C1614B2AE5A3FA000733E4 /* PopularMoviesApp.swift */,
-				20C1614D2AE5A3FA000733E4 /* ContentView.swift */,
 				20C1614F2AE5A3FB000733E4 /* Assets.xcassets */,
 				20C161542AE5A3FB000733E4 /* Persistence.swift */,
 				20C161562AE5A3FB000733E4 /* PopularMovies.xcdatamodeld */,
@@ -151,6 +155,32 @@
 				20C161812AE5B22B000733E4 /* MovieDetailsModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		20C161832AE5B421000733E4 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				20C161872AE5B721000733E4 /* Common */,
+				20C161842AE5B431000733E4 /* PopularMovies */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		20C161842AE5B431000733E4 /* PopularMovies */ = {
+			isa = PBXGroup;
+			children = (
+				20C1614D2AE5A3FA000733E4 /* PopularMoviesView.swift */,
+				20C161852AE5B4DF000733E4 /* PopularMoviesViewModel.swift */,
+			);
+			path = PopularMovies;
+			sourceTree = "<group>";
+		};
+		20C161872AE5B721000733E4 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				20C161882AE5B72C000733E4 /* MovieListItemView.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,8 +319,10 @@
 				20C1617C2AE5A4D6000733E4 /* DataFetcher.swift in Sources */,
 				20C161582AE5A3FB000733E4 /* PopularMovies.xcdatamodeld in Sources */,
 				20C161552AE5A3FB000733E4 /* Persistence.swift in Sources */,
-				20C1614E2AE5A3FA000733E4 /* ContentView.swift in Sources */,
+				20C1614E2AE5A3FA000733E4 /* PopularMoviesView.swift in Sources */,
 				20C1614C2AE5A3FA000733E4 /* PopularMoviesApp.swift in Sources */,
+				20C161892AE5B72C000733E4 /* MovieListItemView.swift in Sources */,
+				20C161862AE5B4DF000733E4 /* PopularMoviesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
