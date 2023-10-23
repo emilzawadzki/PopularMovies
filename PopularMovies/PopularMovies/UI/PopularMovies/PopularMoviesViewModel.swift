@@ -24,7 +24,7 @@ class PopularMoviesViewModel: ObservableObject {
 	
 	private var downloadedPageIndex = 1
 	
-	private var didViewAlreadyAppeared = false
+	var didViewAlreadyAppeared = false
 	
 	func onFirstAppear() {
 		guard !didViewAlreadyAppeared else {
