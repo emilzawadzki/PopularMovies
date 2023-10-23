@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ApiHandlingModule
 
 struct LanguagesView: View {
 	@Environment(\.dismiss) var dismiss

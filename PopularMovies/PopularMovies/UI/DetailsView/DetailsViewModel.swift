@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ApiHandlingModule
 
 class DetailsViewModel: ObservableObject {
 	

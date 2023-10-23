@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct PopularMoviesResponseModel: Codable {
-	var page: Int
-	var results: [MovieModel]
+public struct PopularMoviesResponseModel: Codable {
+	public var page: Int
+	public var results: [MovieModel]
 	
 }

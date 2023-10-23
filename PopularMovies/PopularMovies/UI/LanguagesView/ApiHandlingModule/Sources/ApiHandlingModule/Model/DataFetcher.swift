@@ -7,7 +7,8 @@
 
 import Foundation
 
-class DataFetcher {
+@available(iOS 15.0, *)
+public class DataFetcher {
 	private var session = URLSession.shared
 	private let userDefaults = UserDefaults()
 	
@@ -15,7 +16,11 @@ class DataFetcher {
 	private let apiPath = "https://api.themoviedb.org/3/"
 	private let imageApiPath = "https://image.tmdb.org/t/p/original/"
 	
-	func getPopularMoviesData(page: Int = 1) async throws -> Data? {
+	public init() {
+		
+	}
+	
+	public func getPopularMoviesData(page: Int = 1) async throws -> Data? {
 		guard let url = URL(string: "\(apiPath)discover/movie?include_adult=false&include_video=false&language=en-US&page=\(page)&sort_by=popularity.desc") else {
 			return nil
 		}
@@ -32,7 +37,7 @@ class DataFetcher {
 		}
 	}
 	
-	func getMovieDetails(movieID: Int) async throws -> Data? {
+	public func getMovieDetails(movieID: Int) async throws -> Data? {
 		guard let url = URL(string: "\(apiPath)movie/\(movieID)?language=en-US") else {
 			return nil
 		}
@@ -49,7 +54,7 @@ class DataFetcher {
 		}
 	}
 	
-	func moviesListModel(from data: Data?) -> [MovieModel]? {
+	public func moviesListModel(from data: Data?) -> [MovieModel]? {
 		guard let jsonData = data else { return nil }
 		let decoder = JSONDecoder()
 		let moviesModel = try? decoder.decode(PopularMoviesResponseModel.self, from: jsonData)
@@ -57,7 +62,7 @@ class DataFetcher {
 		return moviesModel?.results
 	}
 	
-	func movieOverviewModel(from data: Data?) -> String? {
+	public func movieOverviewModel(from data: Data?) -> String? {
 		guard let jsonData = data else { return nil }
 		let decoder = JSONDecoder()
 		let moviesModel = try? decoder.decode(MovieDetailsModel.self, from: jsonData)
@@ -65,7 +70,7 @@ class DataFetcher {
 		return moviesModel?.overview
 	}
 	
-	func movieLangugesModel(from data: Data?) -> [LanguageModel]? {
+	public func movieLangugesModel(from data: Data?) -> [LanguageModel]? {
 		guard let jsonData = data else { return nil }
 		let decoder = JSONDecoder()
 		let moviesModel = try? decoder.decode(MovieDetailsModel.self, from: jsonData)
@@ -73,7 +78,7 @@ class DataFetcher {
 		return moviesModel?.spoken_languages
 	}
 	
-	func movieReleaseDateModel(from data: Data?) -> String? {
+	public func movieReleaseDateModel(from data: Data?) -> String? {
 		guard let jsonData = data else { return nil }
 		let decoder = JSONDecoder()
 		let moviesModel = try? decoder.decode(MovieDetailsModel.self, from: jsonData)
@@ -82,14 +87,14 @@ class DataFetcher {
 	}
 	
 	private let favouritesKey = "favouritesKey"
-	func isMovieFavourite(movieID: Int) -> Bool {
+	public func isMovieFavourite(movieID: Int) -> Bool {
 		if let favouritesList = userDefaults.object(forKey: favouritesKey) as? [Int] {
 			return favouritesList.contains(movieID)
 		}
 		return false
 	}
 	
-	func setMovieAsFavourite(movieID: Int, isFavourite: Bool) {
+	public func setMovieAsFavourite(movieID: Int, isFavourite: Bool) {
 		if var favouritesList = userDefaults.object(forKey: favouritesKey) as? [Int] {
 			if isFavourite {
 				favouritesList.append(movieID)

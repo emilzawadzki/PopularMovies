@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ApiHandlingModule
 
 struct MovieListItemView: View {
 	let movie: MovieModel
