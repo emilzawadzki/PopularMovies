@@ -19,6 +19,8 @@ class PopularMoviesViewModel: ObservableObject {
 	@Published var onlyFavourites = false
 	@Published var loaderVisible = true
 	
+	@Published var showError = false
+	
 	private var downloadedPageIndex = 1
 	
 	private var didViewAlreadyAppeared = false
@@ -41,7 +43,10 @@ class PopularMoviesViewModel: ObservableObject {
 	func getPopularMovies() async {
 		let moviesData = try? await dataFetcher.getPopularMoviesData(page: downloadedPageIndex)
 		let moviesModel = dataFetcher.moviesListModel(from: moviesData)
-		guard let movies = moviesModel else { return }
+		guard let movies = moviesModel else {
+			showError = true
+			return
+		}
 		self.movies.append(contentsOf: movies)
 	}
 	
@@ -64,5 +69,16 @@ class PopularMoviesViewModel: ObservableObject {
 			}
 		}
 		
+	}
+	
+	func onRetryTapped() {
+		loaderVisible = true
+		showError = false
+		Task {
+			await getPopularMovies()
+			DispatchQueue.main.async() {
+				self.loaderVisible = false
+			}
+		}
 	}
 }

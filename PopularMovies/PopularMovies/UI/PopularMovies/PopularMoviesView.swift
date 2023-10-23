@@ -9,7 +9,6 @@ import SwiftUI
 import CoreData
 
 struct PopularMoviesView: View {
-    @Environment(\.managedObjectContext) private var viewContext
 
 	@StateObject var moviesViewModel = PopularMoviesViewModel()
 	
@@ -54,6 +53,32 @@ struct PopularMoviesView: View {
 						ProgressView()
 					}
 				}
+				
+				if moviesViewModel.showError {
+					ZStack {
+						Color(red: 0, green: 0, blue: 0, opacity: 0.5).edgesIgnoringSafeArea(.all)
+						VStack {
+							Text("Error: loading movies list failed")
+								.frame(maxWidth: .infinity, alignment: .center)
+								.foregroundColor(.white)
+							Button {
+								moviesViewModel.onRetryTapped()
+							} label: {
+								ZStack {
+									Text("Retry")
+								}.padding(10)
+							}
+							.background(RoundedRectangle(
+								cornerRadius: 10,
+								style: .continuous
+								)
+								.fill(.black)
+							)
+							.foregroundColor(.white)
+						}
+						.padding(40)
+					}
+				}
 			}
 			.onAppear {
 				moviesViewModel.onFirstAppear()
@@ -73,6 +98,6 @@ private let itemFormatter: DateFormatter = {
 
 struct PopularMoviesView_Previews: PreviewProvider {
     static var previews: some View {
-		PopularMoviesView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+		PopularMoviesView()
     }
 }

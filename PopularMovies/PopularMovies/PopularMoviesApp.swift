@@ -9,12 +9,11 @@ import SwiftUI
 
 @main
 struct PopularMoviesApp: App {
-    let persistenceController = PersistenceController.shared
+    
 
     var body: some Scene {
         WindowGroup {
 			PopularMoviesView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

@@ -17,7 +17,6 @@ class DataFetcher {
 	
 	func getPopularMoviesData(page: Int = 1) async throws -> Data? {
 		guard let url = URL(string: "\(apiPath)discover/movie?include_adult=false&include_video=false&language=en-US&page=\(page)&sort_by=popularity.desc") else {
-			//TODO: handle error
 			return nil
 		}
 		do {
@@ -25,35 +24,16 @@ class DataFetcher {
 			request.addValue("application/json", forHTTPHeaderField: "accept")
 			request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
 			
-			let (data, _) = try await URLSession.shared.data(for: request)
+			let (data, _) = try await session.data(for: request)
 			return data
 		} catch {
-			//TODO: handle error
-			return nil
-		}
-	}
-	
-	func serachMovies(query: String) async throws -> Data? {
-		guard let url = URL(string: "\(apiPath)search/movie?query=\(query)&include_adult=false&language=en-US&page=1") else {
-			//TODO: handle error
-			return nil
-		}
-		do {
-			var request = URLRequest(url: url)
-			request.addValue("application/json", forHTTPHeaderField: "accept")
-			request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-			
-			let (data, _) = try await URLSession.shared.data(for: request)
-			return data
-		} catch {
-			//TODO: handle error
+			// Error handled in ViewModel class
 			return nil
 		}
 	}
 	
 	func getMovieDetails(movieID: Int) async throws -> Data? {
 		guard let url = URL(string: "\(apiPath)movie/\(movieID)?language=en-US") else {
-			//TODO: handle error
 			return nil
 		}
 		do {
@@ -61,26 +41,10 @@ class DataFetcher {
 			request.addValue("application/json", forHTTPHeaderField: "accept")
 			request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
 			
-			let (data, _) = try await URLSession.shared.data(for: request)
+			let (data, _) = try await session.data(for: request)
 			return data
 		} catch {
-			//TODO: handle error
-			return nil
-		}
-	}
-	
-	func downloadImage(posterPath: String) async throws -> Data? {
-		guard let url = URL(string: "\(imageApiPath)\(posterPath)") else {
-			//TODO: handle error
-			return nil
-		}
-		do {
-			let request = URLRequest(url: url)
-			
-			let (data, _) = try await URLSession.shared.data(for: request)
-			return data
-		} catch {
-			//TODO: handle error
+			// Error handled in ViewModel class
 			return nil
 		}
 	}
@@ -134,7 +98,7 @@ class DataFetcher {
 			}
 			userDefaults.set(favouritesList, forKey: favouritesKey)
 		} else if isFavourite {
-			var favouritesList = [movieID]
+			let favouritesList = [movieID]
 			userDefaults.set(favouritesList, forKey: favouritesKey)
 		}
 	}

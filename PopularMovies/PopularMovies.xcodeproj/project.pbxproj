@@ -11,8 +11,6 @@
 		20C1614E2AE5A3FA000733E4 /* PopularMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1614D2AE5A3FA000733E4 /* PopularMoviesView.swift */; };
 		20C161502AE5A3FB000733E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20C1614F2AE5A3FB000733E4 /* Assets.xcassets */; };
 		20C161532AE5A3FB000733E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20C161522AE5A3FB000733E4 /* Preview Assets.xcassets */; };
-		20C161552AE5A3FB000733E4 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C161542AE5A3FB000733E4 /* Persistence.swift */; };
-		20C161582AE5A3FB000733E4 /* PopularMovies.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 20C161562AE5A3FB000733E4 /* PopularMovies.xcdatamodeld */; };
 		20C161622AE5A3FC000733E4 /* PopularMoviesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C161612AE5A3FC000733E4 /* PopularMoviesTests.swift */; };
 		20C1616C2AE5A3FC000733E4 /* PopularMoviesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1616B2AE5A3FC000733E4 /* PopularMoviesUITests.swift */; };
 		20C1616E2AE5A3FC000733E4 /* PopularMoviesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1616D2AE5A3FC000733E4 /* PopularMoviesUITestsLaunchTests.swift */; };
@@ -51,8 +49,6 @@
 		20C1614D2AE5A3FA000733E4 /* PopularMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesView.swift; sourceTree = "<group>"; };
 		20C1614F2AE5A3FB000733E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20C161522AE5A3FB000733E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		20C161542AE5A3FB000733E4 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		20C161572AE5A3FB000733E4 /* PopularMovies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PopularMovies.xcdatamodel; sourceTree = "<group>"; };
 		20C1615D2AE5A3FC000733E4 /* PopularMoviesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopularMoviesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		20C161612AE5A3FC000733E4 /* PopularMoviesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesTests.swift; sourceTree = "<group>"; };
 		20C161672AE5A3FC000733E4 /* PopularMoviesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopularMoviesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,8 +118,6 @@
 				20C1617A2AE5A4BB000733E4 /* Model */,
 				20C1614B2AE5A3FA000733E4 /* PopularMoviesApp.swift */,
 				20C1614F2AE5A3FB000733E4 /* Assets.xcassets */,
-				20C161542AE5A3FB000733E4 /* Persistence.swift */,
-				20C161562AE5A3FB000733E4 /* PopularMovies.xcdatamodeld */,
 				20C161512AE5A3FB000733E4 /* Preview Content */,
 			);
 			path = PopularMovies;
@@ -337,10 +331,8 @@
 				20C161822AE5B22B000733E4 /* MovieDetailsModel.swift in Sources */,
 				20C161802AE5ABDC000733E4 /* PopularMoviesResponseModel.swift in Sources */,
 				20C1617C2AE5A4D6000733E4 /* DataFetcher.swift in Sources */,
-				20C161582AE5A3FB000733E4 /* PopularMovies.xcdatamodeld in Sources */,
 				20C161CF2AE6B7C9000733E4 /* LanguageModel.swift in Sources */,
 				20C161D22AE6BBA3000733E4 /* LanugagesView.swift in Sources */,
-				20C161552AE5A3FB000733E4 /* Persistence.swift in Sources */,
 				20C1618C2AE5C5B1000733E4 /* DetailsView.swift in Sources */,
 				20C1614E2AE5A3FA000733E4 /* PopularMoviesView.swift in Sources */,
 				20C1614C2AE5A3FA000733E4 /* PopularMoviesApp.swift in Sources */,
@@ -673,19 +665,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		20C161562AE5A3FB000733E4 /* PopularMovies.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				20C161572AE5A3FB000733E4 /* PopularMovies.xcdatamodel */,
-			);
-			currentVersion = 20C161572AE5A3FB000733E4 /* PopularMovies.xcdatamodel */;
-			path = PopularMovies.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 20C161402AE5A3FA000733E4 /* Project object */;
 }
