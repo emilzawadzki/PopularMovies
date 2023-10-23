@@ -10,6 +10,7 @@ import SwiftUI
 struct DetailsView: View {
 	
 	@StateObject var detailsViewModel: DetailsViewModel
+	@State private var showingModal = false
 	
 	var body: some View {
 		ZStack {
@@ -26,23 +27,30 @@ struct DetailsView: View {
 					}
 					.frame(width: 180.0, height: 180.0, alignment: .center)
 					Spacer()
-					Text("Overview:")
-						.font(.title2)
-					Text($detailsViewModel.movieOverview.wrappedValue)
-						.font(.title3)
+					Group {
+						Text("Overview:")
+							.font(.title2)
+						Text($detailsViewModel.movieOverview.wrappedValue)
+							.font(.title3)
+						Spacer()
+						Text("Release date:")
+							.font(.title2)
+						Text($detailsViewModel.movieReleaseDate.wrappedValue)
+							.font(.title3)
+						Spacer()
+					}
+					Button("Show languages") {
+						showingModal.toggle()
+					}
 					Spacer()
-					Text("Release date:")
-						.font(.title2)
-					Text($detailsViewModel.movieReleaseDate.wrappedValue)
-						.font(.title3)
-					Spacer()
-					Toggle (isOn: $detailsViewModel.isFavourite) {
+					Toggle(isOn: $detailsViewModel.isFavourite) {
 						Text("Is favourite")
 							.font(.title2)
 					}
 					.frame(alignment: .center)
 				}
 				.padding(20)
+				.sheet(isPresented: $showingModal, content: { LanguagesView(languages:detailsViewModel.languages) })
 				.onAppear() {
 					Task {
 						await detailsViewModel.getMovieDetails()

@@ -18,6 +18,7 @@ class DetailsViewModel: ObservableObject {
 			dataFetcher.setMovieAsFavourite(movieID: movieInfo.id, isFavourite: isFavourite)
 		}
 	}
+	var languages: [LanguageModel] = []
 	
 	init(movieInfo: MovieModel) {
 		self.movieInfo = movieInfo
@@ -30,22 +31,30 @@ class DetailsViewModel: ObservableObject {
 		let group = DispatchGroup()
 		var overview = ""
 		var releaseDate = ""
+		var languages: [LanguageModel] = []
 		group.enter()
 		Task(priority: .background) {
-			let moviesDetailsData = try? await dataFetcher.getMovieOverview(movieID: movieInfo.id)
+			let moviesDetailsData = try? await dataFetcher.getMovieDetails(movieID: movieInfo.id)
 			overview = dataFetcher.movieOverviewModel(from: moviesDetailsData) ?? ""
 			group.leave()
 		}
 		group.enter()
 		Task(priority: .background) {
-			let moviesDetailsData = try? await dataFetcher.getMovieReleaseDate(movieID: movieInfo.id)
+			let moviesDetailsData = try? await dataFetcher.getMovieDetails(movieID: movieInfo.id)
 			releaseDate = dataFetcher.movieReleaseDateModel(from: moviesDetailsData) ?? ""
+			group.leave()
+		}
+		group.enter()
+		Task(priority: .background) {
+			let moviesDetailsData = try? await dataFetcher.getMovieDetails(movieID: movieInfo.id)
+			languages = dataFetcher.movieLangugesModel(from: moviesDetailsData) ?? []
 			group.leave()
 		}
 		
 		group.notify(queue: .main) {
 			self.movieReleaseDate = releaseDate
 			self.movieOverview = overview
+			self.languages = languages
 		}
 	}
 }

@@ -51,25 +51,7 @@ class DataFetcher {
 		}
 	}
 	
-	func getMovieOverview(movieID: Int) async throws -> Data? {
-		guard let url = URL(string: "\(apiPath)movie/\(movieID)?language=en-US") else {
-			//TODO: handle error
-			return nil
-		}
-		do {
-			var request = URLRequest(url: url)
-			request.addValue("application/json", forHTTPHeaderField: "accept")
-			request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-			
-			let (data, _) = try await URLSession.shared.data(for: request)
-			return data
-		} catch {
-			//TODO: handle error
-			return nil
-		}
-	}
-	
-	func getMovieReleaseDate(movieID: Int) async throws -> Data? {
+	func getMovieDetails(movieID: Int) async throws -> Data? {
 		guard let url = URL(string: "\(apiPath)movie/\(movieID)?language=en-US") else {
 			//TODO: handle error
 			return nil
@@ -117,6 +99,14 @@ class DataFetcher {
 		let moviesModel = try? decoder.decode(MovieDetailsModel.self, from: jsonData)
 		
 		return moviesModel?.overview
+	}
+	
+	func movieLangugesModel(from data: Data?) -> [LanguageModel]? {
+		guard let jsonData = data else { return nil }
+		let decoder = JSONDecoder()
+		let moviesModel = try? decoder.decode(MovieDetailsModel.self, from: jsonData)
+		
+		return moviesModel?.spoken_languages
 	}
 	
 	func movieReleaseDateModel(from data: Data?) -> String? {

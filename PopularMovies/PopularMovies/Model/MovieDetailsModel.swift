@@ -10,4 +10,5 @@ import Foundation
 struct MovieDetailsModel: Codable {
 	var overview: String
 	var release_date: String
+	var spoken_languages: [LanguageModel]
 }
