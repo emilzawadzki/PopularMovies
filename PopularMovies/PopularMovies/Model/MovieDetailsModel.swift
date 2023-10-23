@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct MovieDetailsModel: Identifiable, Codable {
-	var id: Int
+struct MovieDetailsModel: Codable {
 	var overview: String
 	var release_date: String
 }

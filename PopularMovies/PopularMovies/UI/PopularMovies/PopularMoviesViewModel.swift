@@ -9,6 +9,8 @@ import SwiftUI
 
 class PopularMoviesViewModel: ObservableObject {
 	
+	private let dataFetcher = DataFetcher()
+	
 	@Published var movies: [MovieModel] = []
 	
 	var favouriteMovies: [MovieModel] {
@@ -18,9 +20,20 @@ class PopularMoviesViewModel: ObservableObject {
 	
 	private var downloadedPageIndex = 1
 	
+	private var didViewAlreadyAppeared = false
+	
+	func onFirstAppear() {
+		guard !didViewAlreadyAppeared else {
+			return
+		}
+		didViewAlreadyAppeared.toggle()
+		Task {
+			await getPopularMovies()
+		}
+	}
+	
 	@MainActor
 	func getPopularMovies() async {
-		let dataFetcher = DataFetcher()
 		let moviesData = try? await dataFetcher.getPopularMoviesData(page: downloadedPageIndex)
 		let moviesModel = dataFetcher.moviesListModel(from: moviesData)
 		guard let movies = moviesModel else { return }
@@ -28,11 +41,17 @@ class PopularMoviesViewModel: ObservableObject {
 	}
 	
 	func filterFavourites(movies: [MovieModel]) -> [MovieModel] {
-		//TODO: change
-		return movies.filter{ $0.adult }
+		return movies.filter{ isMovieFavourite(movieID: $0.id) }
+	}
+	
+	func isMovieFavourite(movieID: Int) -> Bool {
+		return dataFetcher.isMovieFavourite(movieID: movieID)
 	}
 	
 	func loadMoreContentIfNeeded(currentItem: MovieModel) {
+		guard !onlyFavourites else {
+			return
+		}
 		if movies.last?.id == currentItem.id {
 			downloadedPageIndex += 1
 			Task {

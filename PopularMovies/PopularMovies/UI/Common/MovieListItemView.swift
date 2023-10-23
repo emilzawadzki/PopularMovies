@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovieListItemView: View {
 	let movie: MovieModel
+	let isFavourite: Bool
 	
 	var body: some View {
 		HStack(alignment: .center, spacing: 20) {
@@ -23,9 +24,10 @@ struct MovieListItemView: View {
 			VStack(alignment: .leading) {
 				Text(movie.title)
 					.font(.title)
-				//TODO: change
-				if movie.adult {
+				if isFavourite {
 					Text("favourite")
+						.padding(EdgeInsets(top: 3, leading: 5, bottom: 3, trailing: 5))
+						.overlay(RoundedRectangle(cornerSize: CGSize(width: 5, height: 5)).stroke(Color.black, lineWidth: 3))
 				}
 			}
 		}
@@ -34,6 +36,6 @@ struct MovieListItemView: View {
 
 struct MovieListItemView_Previews: PreviewProvider {
 	static var previews: some View {
-		MovieListItemView(movie: MovieModel.example)
+		MovieListItemView(movie: MovieModel.example, isFavourite: true)
 	}
 }

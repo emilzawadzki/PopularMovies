@@ -8,7 +8,8 @@
 import Foundation
 
 class DataFetcher {
-	var session = URLSession.shared
+	private var session = URLSession.shared
+	private let userDefaults = UserDefaults()
 	
 	private let apiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5OTU4YTlmYTA4MWM5NzVhZGM0NDA4Yzc4ZGU4NWM4YiIsInN1YiI6IjY1MzFiNDE2OWFjNTM1MDBmZjY3MWFhNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.24nsimcIMvxyYCUdWvVEXfbxL6SSFELp6vQarXh6658"
 	private let apiPath = "https://api.themoviedb.org/3/"
@@ -50,7 +51,25 @@ class DataFetcher {
 		}
 	}
 	
-	func getMovieDetails(movieID: Int) async throws -> Data? {
+	func getMovieOverview(movieID: Int) async throws -> Data? {
+		guard let url = URL(string: "\(apiPath)movie/\(movieID)?language=en-US") else {
+			//TODO: handle error
+			return nil
+		}
+		do {
+			var request = URLRequest(url: url)
+			request.addValue("application/json", forHTTPHeaderField: "accept")
+			request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+			
+			let (data, _) = try await URLSession.shared.data(for: request)
+			return data
+		} catch {
+			//TODO: handle error
+			return nil
+		}
+	}
+	
+	func getMovieReleaseDate(movieID: Int) async throws -> Data? {
 		guard let url = URL(string: "\(apiPath)movie/\(movieID)?language=en-US") else {
 			//TODO: handle error
 			return nil
@@ -92,12 +111,42 @@ class DataFetcher {
 		return moviesModel?.results
 	}
 	
-	func movieDetailsModel(from data: Data?) -> MovieDetailsModel? {
+	func movieOverviewModel(from data: Data?) -> String? {
 		guard let jsonData = data else { return nil }
 		let decoder = JSONDecoder()
 		let moviesModel = try? decoder.decode(MovieDetailsModel.self, from: jsonData)
 		
-		return moviesModel
+		return moviesModel?.overview
+	}
+	
+	func movieReleaseDateModel(from data: Data?) -> String? {
+		guard let jsonData = data else { return nil }
+		let decoder = JSONDecoder()
+		let moviesModel = try? decoder.decode(MovieDetailsModel.self, from: jsonData)
+		
+		return moviesModel?.release_date
+	}
+	
+	private let favouritesKey = "favouritesKey"
+	func isMovieFavourite(movieID: Int) -> Bool {
+		if let favouritesList = userDefaults.object(forKey: favouritesKey) as? [Int] {
+			return favouritesList.contains(movieID)
+		}
+		return false
+	}
+	
+	func setMovieAsFavourite(movieID: Int, isFavourite: Bool) {
+		if var favouritesList = userDefaults.object(forKey: favouritesKey) as? [Int] {
+			if isFavourite {
+				favouritesList.append(movieID)
+			} else {
+				favouritesList.removeAll(where: { $0 == movieID})
+			}
+			userDefaults.set(favouritesList, forKey: favouritesKey)
+		} else if isFavourite {
+			var favouritesList = [movieID]
+			userDefaults.set(favouritesList, forKey: favouritesKey)
+		}
 	}
 	
 	

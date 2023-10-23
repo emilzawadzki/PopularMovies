@@ -12,34 +12,51 @@ struct PopularMoviesView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
 	@StateObject var moviesViewModel = PopularMoviesViewModel()
+	
+	@State private var selectedMovie: MovieModel?
+	@State private var showingSelectedMovie: Bool = false
 
     var body: some View {
-		VStack {
-			List (moviesViewModel.onlyFavourites ? moviesViewModel.favouriteMovies : moviesViewModel.movies) { movie in
-				MovieListItemView(movie: movie)
+		NavigationView {
+			VStack {
+				List (moviesViewModel.onlyFavourites ? moviesViewModel.favouriteMovies : moviesViewModel.movies) { movie in
+					Button(action: {
+						selectedMovie = movie
+						showingSelectedMovie = true
+					}, label: {
+						MovieListItemView(movie: movie, isFavourite: moviesViewModel.isMovieFavourite(movieID: movie.id))
+					})
 					.onAppear() {
 						moviesViewModel.loadMoreContentIfNeeded(currentItem: movie)
 					}
-			}
-			
-			HStack(alignment: .top, spacing: 20) {
-				Toggle (isOn: $moviesViewModel.onlyFavourites) {
-					Text("Favourites")
-						.frame(maxWidth: .infinity, alignment: .trailing)
 				}
-				Button("Get Movies") {
-					Task {
-						await moviesViewModel.getPopularMovies()
+				NavigationLink(isActive: $showingSelectedMovie) {
+					if let selectedMovie {
+						DetailsView(detailsViewModel: DetailsViewModel(movieInfo: selectedMovie))
+					} else {
+						EmptyView()
 					}
+				} label: {}
+					.isDetailLink(false)
+					.hidden()
+				
+				HStack(alignment: .top, spacing: 20) {
+					Toggle (isOn: $moviesViewModel.onlyFavourites) {
+						Text("Favourites")
+							.frame(maxWidth: .infinity, alignment: .trailing)
+					}
+					Button("Get Movies") {
+						Task {
+							await moviesViewModel.getPopularMovies()
+						}
+					}
+					.buttonStyle(.borderedProminent)
+					.clipShape(RoundedRectangle(cornerRadius: 10))
 				}
-				.buttonStyle(.borderedProminent)
-				.clipShape(RoundedRectangle(cornerRadius: 10))
+				.padding()
 			}
-			.padding()
-		}
-		.onAppear {
-			Task {
-				await moviesViewModel.getPopularMovies()
+			.onAppear {
+				moviesViewModel.onFirstAppear()
 			}
 		}
     }
