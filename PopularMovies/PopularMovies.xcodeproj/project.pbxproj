@@ -171,7 +171,6 @@
 			children = (
 				20C161D02AE6BB95000733E4 /* LanguagesView */,
 				20C1618A2AE5C59E000733E4 /* DetailsView */,
-				20C161872AE5B721000733E4 /* Common */,
 				20C161842AE5B431000733E4 /* PopularMovies */,
 			);
 			path = UI;
@@ -180,18 +179,11 @@
 		20C161842AE5B431000733E4 /* PopularMovies */ = {
 			isa = PBXGroup;
 			children = (
+				20C161882AE5B72C000733E4 /* MovieListItemView.swift */,
 				20C1614D2AE5A3FA000733E4 /* PopularMoviesView.swift */,
 				20C161852AE5B4DF000733E4 /* PopularMoviesViewModel.swift */,
 			);
 			path = PopularMovies;
-			sourceTree = "<group>";
-		};
-		20C161872AE5B721000733E4 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				20C161882AE5B72C000733E4 /* MovieListItemView.swift */,
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		20C1618A2AE5C59E000733E4 /* DetailsView */ = {

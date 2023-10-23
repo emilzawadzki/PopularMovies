@@ -24,19 +24,30 @@ struct LanguagesView: View {
 						VStack {
 							HStack(alignment: .top) {
 								Text(language.english_name)
-									.font(.title)
+									.font(.title2)
 								Text("(\(language.name))")
-									.font(.title)
+									.font(.title2)
 							}
-							Spacer()
+							Spacer(minLength: 20)
 						}
 					}
 					
-					Button("Close") {
+					Spacer(minLength: 40)
+					
+					Button {
 						dismiss()
+					} label: {
+						ZStack {
+							Text("Close")
+						}.padding(10)
 					}
-					.font(.title)
-					.padding()
+					.background(RoundedRectangle(
+						cornerRadius: 10,
+						style: .continuous
+						)
+						.fill(.black)
+					)
+					.foregroundColor(.white)
 				}
 				.padding(20)
 			}

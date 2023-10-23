@@ -19,6 +19,7 @@ class DetailsViewModel: ObservableObject {
 		}
 	}
 	var languages: [LanguageModel] = []
+	@Published var loaderVisible = true
 	
 	init(movieInfo: MovieModel) {
 		self.movieInfo = movieInfo
@@ -26,7 +27,7 @@ class DetailsViewModel: ObservableObject {
 	
 	@MainActor
 	func getMovieDetails() async {
-		//TODO: change
+		loaderVisible = true
 		isFavourite = dataFetcher.isMovieFavourite(movieID: movieInfo.id)
 		let group = DispatchGroup()
 		var overview = ""
@@ -55,6 +56,7 @@ class DetailsViewModel: ObservableObject {
 			self.movieReleaseDate = releaseDate
 			self.movieOverview = overview
 			self.languages = languages
+			self.loaderVisible = false
 		}
 	}
 }

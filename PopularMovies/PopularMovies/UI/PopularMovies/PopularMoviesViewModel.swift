@@ -17,6 +17,7 @@ class PopularMoviesViewModel: ObservableObject {
 		return filterFavourites(movies: movies)
 	}
 	@Published var onlyFavourites = false
+	@Published var loaderVisible = true
 	
 	private var downloadedPageIndex = 1
 	
@@ -27,8 +28,12 @@ class PopularMoviesViewModel: ObservableObject {
 			return
 		}
 		didViewAlreadyAppeared.toggle()
+		loaderVisible = true
 		Task {
 			await getPopularMovies()
+			DispatchQueue.main.async() {
+				self.loaderVisible = false
+			}
 		}
 	}
 	

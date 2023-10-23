@@ -18,42 +18,42 @@ struct PopularMoviesView: View {
 
     var body: some View {
 		NavigationView {
-			VStack {
-				List (moviesViewModel.onlyFavourites ? moviesViewModel.favouriteMovies : moviesViewModel.movies) { movie in
-					Button(action: {
-						selectedMovie = movie
-						showingSelectedMovie = true
-					}, label: {
-						MovieListItemView(movie: movie, isFavourite: moviesViewModel.isMovieFavourite(movieID: movie.id))
-					})
-					.onAppear() {
-						moviesViewModel.loadMoreContentIfNeeded(currentItem: movie)
-					}
-				}
-				NavigationLink(isActive: $showingSelectedMovie) {
-					if let selectedMovie {
-						DetailsView(detailsViewModel: DetailsViewModel(movieInfo: selectedMovie))
-					} else {
-						EmptyView()
-					}
-				} label: {}
-					.isDetailLink(false)
-					.hidden()
-				
-				HStack(alignment: .top, spacing: 20) {
-					Toggle (isOn: $moviesViewModel.onlyFavourites) {
-						Text("Favourites")
-							.frame(maxWidth: .infinity, alignment: .trailing)
-					}
-					Button("Get Movies") {
-						Task {
-							await moviesViewModel.getPopularMovies()
+			ZStack {
+				VStack {
+					HStack(alignment: .top, spacing: 20) {
+						Toggle (isOn: $moviesViewModel.onlyFavourites) {
+							Text("Favourites only")
+								.frame(maxWidth: .infinity, alignment: .leading)
 						}
 					}
-					.buttonStyle(.borderedProminent)
-					.clipShape(RoundedRectangle(cornerRadius: 10))
+					.padding()
+					List (moviesViewModel.onlyFavourites ? moviesViewModel.favouriteMovies : moviesViewModel.movies) { movie in
+						Button(action: {
+							selectedMovie = movie
+							showingSelectedMovie = true
+						}, label: {
+							MovieListItemView(movie: movie, isFavourite: moviesViewModel.isMovieFavourite(movieID: movie.id))
+						})
+						.onAppear() {
+							moviesViewModel.loadMoreContentIfNeeded(currentItem: movie)
+						}
+					}
+					NavigationLink(isActive: $showingSelectedMovie) {
+						if let selectedMovie {
+							DetailsView(detailsViewModel: DetailsViewModel(movieInfo: selectedMovie))
+						} else {
+							EmptyView()
+						}
+					} label: {}
+						.isDetailLink(false)
+						.hidden()
 				}
-				.padding()
+				if moviesViewModel.loaderVisible {
+					ZStack {
+						Color(red: 0, green: 0, blue: 0, opacity: 0.5).edgesIgnoringSafeArea(.all)
+						ProgressView()
+					}
+				}
 			}
 			.onAppear {
 				moviesViewModel.onFirstAppear()

@@ -18,6 +18,7 @@ struct DetailsView: View {
 				VStack {
 					Text(detailsViewModel.movieInfo.title)
 						.font(.title)
+					Spacer()
 					AsyncImage(url: URL(string: detailsViewModel.movieInfo.imagePath)) { image in
 						image
 							.resizable()
@@ -25,36 +26,54 @@ struct DetailsView: View {
 					} placeholder: {
 						Color.gray
 					}
-					.frame(width: 180.0, height: 180.0, alignment: .center)
-					Spacer()
+					.frame(width: 200.0, height: 300.0, alignment: .center)
+					Spacer(minLength: 40)
 					Group {
 						Text("Overview:")
 							.font(.title2)
 						Text($detailsViewModel.movieOverview.wrappedValue)
 							.font(.title3)
-						Spacer()
+							.multilineTextAlignment(.center)
+						Spacer(minLength: 40)
 						Text("Release date:")
 							.font(.title2)
 						Text($detailsViewModel.movieReleaseDate.wrappedValue)
 							.font(.title3)
-						Spacer()
+						Spacer(minLength: 40)
 					}
-					Button("Show languages") {
+					Button {
 						showingModal.toggle()
+					} label: {
+						ZStack {
+							Text("Show languages")
+						}.padding(10)
 					}
-					Spacer()
+					.background(RoundedRectangle(
+						cornerRadius: 10,
+						style: .continuous
+						)
+						.fill(.black)
+					)
+					.foregroundColor(.white)
+					
+					Spacer(minLength: 40)
 					Toggle(isOn: $detailsViewModel.isFavourite) {
 						Text("Is favourite")
 							.font(.title2)
 					}
-					.frame(alignment: .center)
 				}
-				.padding(20)
+				.padding(30)
 				.sheet(isPresented: $showingModal, content: { LanguagesView(languages:detailsViewModel.languages) })
 				.onAppear() {
 					Task {
 						await detailsViewModel.getMovieDetails()
 					}
+				}
+			}
+			if detailsViewModel.loaderVisible {
+				ZStack {
+					Color(red: 0, green: 0, blue: 0, opacity: 0.5).edgesIgnoringSafeArea(.all)
+					ProgressView()
 				}
 			}
 		}
